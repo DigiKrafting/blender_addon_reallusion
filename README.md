@@ -46,6 +46,6 @@ Installing an Addon in Blender
 
 # Screenshots
 
-![alt](/screenshots/pipeline_prefs.png)
+![alt](/screenshots/ic_prefs.png)
 
-![alt](/screenshots/pipeline.png)
+![alt](/screenshots/ic.png)

@@ -138,19 +138,7 @@ def draw_ds_ic_menu(self, context):
         layout = self.layout
         layout.menu(ds_ic_menu.bl_idname,icon="COLLAPSEMENU")
 
-class ds_ic_iclone_toggle(bpy.types.Operator):
 
-    bl_idname = "ds_ic.iclone_toggle"
-    bl_label = "iClone"
-    bl_space_type = 'PROPERTIES'
-    bl_region_type = 'WINDOW'
-    def execute(self, context):
-
-        if not bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
-                bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state=True
-        else:
-                bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
-        return {'FINISHED'}
 
 def register():
 
@@ -158,7 +146,6 @@ def register():
 
         register_class(ds_ic_addon_prefs)
         register_class(ds_ic_prefs_open)
-        register_class(ds_ic_iclone_toggle)
 
         ds_ic.register()
 
@@ -178,7 +165,6 @@ def unregister():
 
         ds_ic.unregister()
 
-        unregister_class(ds_ic_iclone_toggle)
         unregister_class(ds_ic_addon_prefs)
         unregister_class(ds_ic_prefs_open)
 

@@ -149,6 +149,20 @@ class ds_ic_export_cc(bpy.types.Operator):
 
         return {'FINISHED'}
 
+class ds_ic_toggle(bpy.types.Operator):
+
+    bl_idname = "ds_ic.toggle"
+    bl_label = "iClone"
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    def execute(self, context):
+
+        if not bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
+                bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state=True
+        else:
+                bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
+        return {'FINISHED'}
+
 def ds_ic_menu_func_import_base(self, context):
     self.layout.operator(ds_ic_import_base.bl_idname)
 def ds_ic_menu_func_import_female(self, context):
@@ -185,6 +199,7 @@ def register():
     register_class(ds_ic_export_cc)
     register_class(ds_ic_export_3dx)
     register_class(ds_ic_export_ic)
+    register_class(ds_ic_toggle)
 
     bpy.types.INFO_MT_file_import.append(ds_ic_menu_func_import_base)
     bpy.types.INFO_MT_file_import.append(ds_ic_menu_func_import_female)
@@ -220,8 +235,8 @@ def unregister():
         bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_3dx)
         bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_ic)  
 
+    unregister_class(ds_ic_toggle)
     unregister_class(ds_ic_fbx_export_execute)
-
     unregister_class(ds_ic_import_base)
     unregister_class(ds_ic_import_female)
     unregister_class(ds_ic_import_male)
