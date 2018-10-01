@@ -20,12 +20,12 @@ bl_info = {
         "name": "iClone",
         "description": "iClone Tools",
         "author": "Digiography.Studio",
-        "version": (1, 0, 0),
+        "version": (1, 1, 0),
         "blender": (2, 79, 0),
         "location": "Info Toolbar, File -> Import, File -> Export",
         "wiki_url":    "https://github.com/Digiography/blender_addon_iclone/wiki",
         "tracker_url": "https://github.com/Digiography/blender_addon_iclone/issues",
-        "category": "System",
+        "category": "Import-Export",
 }
 
 import bpy

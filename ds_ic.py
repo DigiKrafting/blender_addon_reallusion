@@ -31,7 +31,7 @@ def ds_ic_fbx_export(self, context):
     if not bpy.context.user_preferences.addons[__package__].preferences.option_save_before_export:
         bpy.ops.wm.save_mainfile()
 
-    bpy.ops.export_scene.fbx(filepath=_export_file, check_existing=False, axis_forward='-Z', axis_up='Y', filter_glob="*.fbx", version='BIN7400', ui_tab='MAIN', use_selection=False, global_scale=1.0, apply_unit_scale=True, bake_space_transform=False, object_types={'ARMATURE', 'MESH'}, use_mesh_modifiers=True, mesh_smooth_type='OFF', use_mesh_edges=False, use_tspace=False, use_custom_props=False, add_leaf_bones=False, primary_bone_axis='Y', secondary_bone_axis='X', use_armature_deform_only=False, bake_anim=False, bake_anim_use_all_bones=False, bake_anim_use_nla_strips=False, bake_anim_use_all_actions=False, bake_anim_force_startend_keying=False, bake_anim_step=1.0, bake_anim_simplify_factor=1.0, use_anim=False, use_anim_action_all=False, use_default_take=False, use_anim_optimize=False, anim_optimize_precision=6.0, path_mode='AUTO', embed_textures=True, batch_mode='OFF', use_batch_own_dir=True, use_metadata=True)
+    bpy.ops.export_scene.fbx(filepath=_export_file, check_existing=False, axis_forward='-Z', axis_up='Y', version='BIN7400', use_selection=False, object_types={'ARMATURE', 'MESH'}, add_leaf_bones=False, path_mode='COPY', embed_textures=True)
     
     return _export_file
 
@@ -74,9 +74,9 @@ class ds_ic_import_base(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = ds_ic_get_export_path()
 
-        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Base.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
 
-        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Base.fbx", axis_forward='-Z', axis_up='Y')
+        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
 
         return {'FINISHED'}
 
@@ -90,9 +90,9 @@ class ds_ic_import_female(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = ds_ic_get_export_path()
 
-        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Base Female.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
         
-        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Base Female.fbx", axis_forward='-Z', axis_up='Y')
+        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
 
         return {'FINISHED'}
 
@@ -106,9 +106,9 @@ class ds_ic_import_male(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = ds_ic_get_export_path()
 
-        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Base Male.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
 
-        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Base Male.fbx", axis_forward='-Z', axis_up='Y')
+        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
 
         return {'FINISHED'}
 
