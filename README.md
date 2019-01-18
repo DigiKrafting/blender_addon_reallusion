@@ -2,6 +2,8 @@
 
 Pipeline/Workflow import/export for iClone.
 
+\* Updated to Blender 2.80.0 Beta
+
 # Features
 
 - One click iClone Base FBX Template Import (Copies "Base.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
@@ -16,15 +18,17 @@ Pipeline/Workflow import/export for iClone.
 
 - Application Link to Open iClone Character Creator (Exports scene to export folder before opening Character Creator for manual import)
 
-## iClone
-
-- Application Link to Open iClone
-
 # Required Blender Version
 
-2.79.0
+Blender 2.80.0+
 
-\* Will likely work in previous versions but untested.
+blender_addon_iclone 1.2.0+
+
+2.80.0
+
+Prior to blender_addon_iclone 1.2.0
+
+2.79.0
 
 # IMPORTANT USAGE NOTES 
 

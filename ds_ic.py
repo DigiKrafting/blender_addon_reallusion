@@ -17,7 +17,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 import bpy
-
+from bpy.utils import register_class, unregister_class
 from subprocess import Popen
 from os import system, path, makedirs
 
@@ -28,10 +28,10 @@ def ds_ic_fbx_export(self, context):
 
     _export_file = _export_path + _export_name + '.fbx'
 
-    if not bpy.context.user_preferences.addons[__package__].preferences.option_save_before_export:
+    if not bpy.context.preferences.addons[__package__].preferences.option_save_before_export:
         bpy.ops.wm.save_mainfile()
 
-    bpy.ops.export_scene.fbx(filepath=_export_file, check_existing=False, axis_forward='-Z', axis_up='Y', version='BIN7400', use_selection=False, object_types={'ARMATURE', 'MESH'}, add_leaf_bones=False, path_mode='COPY', embed_textures=True)
+    bpy.ops.export_scene.fbx(filepath=_export_file, check_existing=False, axis_forward='-Z', axis_up='Y', use_selection=False, object_types={'ARMATURE', 'MESH'}, add_leaf_bones=False, path_mode='COPY', embed_textures=True)
     
     return _export_file
 
@@ -48,7 +48,7 @@ class ds_ic_fbx_export_execute(bpy.types.Operator):
 
 def ds_ic_get_export_path():
 
-    _export_path = bpy.path.abspath('//') + bpy.context.user_preferences.addons[__package__].preferences.option_export_folder + '\\'
+    _export_path = bpy.path.abspath('//') + bpy.context.preferences.addons[__package__].preferences.option_export_folder + '\\'
 
     if not path.exists(_export_path):
         makedirs(_export_path)
@@ -57,7 +57,7 @@ def ds_ic_get_export_path():
 
 def ds_ic_get_textures_path():
 
-    _textures_path = bpy.path.abspath('//') + bpy.context.user_preferences.addons[__package__].preferences.option_textures_folder + '\\'
+    _textures_path = bpy.path.abspath('//') + bpy.context.preferences.addons[__package__].preferences.option_textures_folder + '\\'
 
     if not path.exists(_textures_path):
         makedirs(_textures_path)
@@ -74,9 +74,9 @@ class ds_ic_import_base(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = ds_ic_get_export_path()
 
-        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy "' + bpy.context.preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
 
-        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
+        bpy.ops.import_scene.fbx(filepath = bpy.context.preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
 
         return {'FINISHED'}
 
@@ -90,9 +90,9 @@ class ds_ic_import_female(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = ds_ic_get_export_path()
 
-        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy "' + bpy.context.preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
         
-        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
+        bpy.ops.import_scene.fbx(filepath = bpy.context.preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
 
         return {'FINISHED'}
 
@@ -106,9 +106,9 @@ class ds_ic_import_male(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = ds_ic_get_export_path()
 
-        system('copy "' + bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy "' + bpy.context.preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
 
-        bpy.ops.import_scene.fbx(filepath = bpy.context.user_preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
+        bpy.ops.import_scene.fbx(filepath = bpy.context.preferences.addons[__package__].preferences.option_ic_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
 
         return {'FINISHED'}
 
@@ -121,18 +121,7 @@ class ds_ic_export_3dx(bpy.types.Operator):
 
         export_file = ds_ic_fbx_export(self, context)
 
-        Popen([bpy.context.user_preferences.addons[__package__].preferences.option_ic_3dx_exe, export_file])
-
-        return {'FINISHED'}
-
-class ds_ic_export_ic(bpy.types.Operator):
-
-    bl_idname = "ds_ic.export_ic"
-    bl_label = "Open iClone"
-
-    def execute(self, context):
-
-        Popen([bpy.context.user_preferences.addons[__package__].preferences.option_ic_exe])
+        Popen([bpy.context.preferences.addons[__package__].preferences.option_ic_3dx_exe, export_file])
 
         return {'FINISHED'}
 
@@ -145,7 +134,7 @@ class ds_ic_export_cc(bpy.types.Operator):
 
         export_file = ds_ic_fbx_export(self, context)
 
-        Popen([bpy.context.user_preferences.addons[__package__].preferences.option_ic_cc_exe])
+        Popen([bpy.context.preferences.addons[__package__].preferences.option_ic_cc_exe, export_file])
 
         return {'FINISHED'}
 
@@ -157,91 +146,29 @@ class ds_ic_toggle(bpy.types.Operator):
     bl_region_type = 'WINDOW'
     def execute(self, context):
 
-        if not bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
-                bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state=True
+        if not bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
+            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=True
         else:
-                bpy.context.user_preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
+            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
         return {'FINISHED'}
 
-def ds_ic_menu_func_import_base(self, context):
-    self.layout.operator(ds_ic_import_base.bl_idname)
-def ds_ic_menu_func_import_female(self, context):
-    self.layout.operator(ds_ic_import_female.bl_idname)
-def ds_ic_menu_func_import_male(self, context):
-    self.layout.operator(ds_ic_import_male.bl_idname)
-def ds_ic_menu_func_export_cc(self, context):
-    self.layout.operator(ds_ic_export_cc.bl_idname)
-def ds_ic_menu_func_export_3dx(self, context):
-    self.layout.operator(ds_ic_export_3dx.bl_idname)
-
-def ds_ic_toolbar_btn_base(self, context):
-    self.layout.operator('ds_ic.import_base',text="Base",icon="IMPORT")
-def ds_ic_toolbar_btn_female(self, context):
-    self.layout.operator('ds_ic.import_female',text="Female",icon="IMPORT")
-def ds_ic_toolbar_btn_male(self, context):
-    self.layout.operator('ds_ic.import_male',text="Male",icon="IMPORT")
-def ds_ic_toolbar_btn_cc(self, context):
-    self.layout.operator('ds_ic.export_cc',text="CC",icon="LINK_BLEND")
-def ds_ic_toolbar_btn_3dx(self, context):
-    self.layout.operator('ds_ic.export_3dx',text="3DX",icon="EXPORT")
-def ds_ic_toolbar_btn_ic(self, context):
-    self.layout.operator('ds_ic.export_ic',text="IC",icon="LINK_BLEND")
+classes = (
+    ds_ic_fbx_export_execute,
+    ds_ic_import_base,
+    ds_ic_import_female,
+    ds_ic_import_male,
+    ds_ic_export_cc,
+    ds_ic_export_3dx,
+    ds_ic_toggle,
+)
 
 def register():
 
-    from bpy.utils import register_class
-
-    register_class(ds_ic_fbx_export_execute)
-
-    register_class(ds_ic_import_base)
-    register_class(ds_ic_import_female)
-    register_class(ds_ic_import_male)
-    register_class(ds_ic_export_cc)
-    register_class(ds_ic_export_3dx)
-    register_class(ds_ic_export_ic)
-    register_class(ds_ic_toggle)
-
-    bpy.types.INFO_MT_file_import.append(ds_ic_menu_func_import_base)
-    bpy.types.INFO_MT_file_import.append(ds_ic_menu_func_import_female)
-    bpy.types.INFO_MT_file_import.append(ds_ic_menu_func_import_male)
-    bpy.types.INFO_MT_file_export.append(ds_ic_menu_func_export_cc)
-    bpy.types.INFO_MT_file_export.append(ds_ic_menu_func_export_3dx)
-
-    if bpy.context.user_preferences.addons[__package__].preferences.option_display_type=='Buttons':
-
-        bpy.types.INFO_HT_header.append(ds_ic_toolbar_btn_base)
-        bpy.types.INFO_HT_header.append(ds_ic_toolbar_btn_female)
-        bpy.types.INFO_HT_header.append(ds_ic_toolbar_btn_male)
-        bpy.types.INFO_HT_header.append(ds_ic_toolbar_btn_cc)
-        bpy.types.INFO_HT_header.append(ds_ic_toolbar_btn_3dx)
-        bpy.types.INFO_HT_header.append(ds_ic_toolbar_btn_ic)
+    for cls in classes:
+        register_class(cls)
 
 def unregister():
 
-    from bpy.utils import unregister_class
-
-    bpy.types.INFO_MT_file_import.remove(ds_ic_menu_func_import_base)
-    bpy.types.INFO_MT_file_import.remove(ds_ic_menu_func_import_female)
-    bpy.types.INFO_MT_file_import.remove(ds_ic_menu_func_import_male)
-    bpy.types.INFO_MT_file_export.remove(ds_ic_menu_func_export_cc)
-    bpy.types.INFO_MT_file_export.remove(ds_ic_menu_func_export_3dx)
-
-    if bpy.context.user_preferences.addons[__package__].preferences.option_display_type=='Buttons':
-
-        bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_base)
-        bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_female)
-        bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_male)
-        bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_cc)
-        bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_3dx)
-        bpy.types.INFO_HT_header.remove(ds_ic_toolbar_btn_ic)  
-
-    unregister_class(ds_ic_toggle)
-    unregister_class(ds_ic_fbx_export_execute)
-    unregister_class(ds_ic_import_base)
-    unregister_class(ds_ic_import_female)
-    unregister_class(ds_ic_import_male)
-    unregister_class(ds_ic_export_cc)
-    unregister_class(ds_ic_export_3dx)
-    unregister_class(ds_ic_export_ic)
-
+    for cls in reversed(classes):
+        unregister_class(cls)
   
