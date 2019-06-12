@@ -20,7 +20,7 @@ bl_info = {
         "name": "iClone",
         "description": "iClone Tools",
         "author": "Digiography.Studio",
-        "version": (1, 2, 0),
+        "version": (1, 2, 5),
         "blender": (2, 80, 0),
         "location": "Info Toolbar, File -> Import, File -> Export",
         "wiki_url":    "https://github.com/Digiography/blender_addon_iclone/wiki",
@@ -29,7 +29,6 @@ bl_info = {
 }
 
 import bpy
-from bpy.utils import register_class, unregister_class
 from . import ds_ic
 
 class ds_ic_addon_prefs(bpy.types.AddonPreferences):
@@ -69,7 +68,7 @@ class ds_ic_addon_prefs(bpy.types.AddonPreferences):
                 default=True,
         )
         option_show_iclone_toggle : bpy.props.BoolProperty(
-                name="iClone Toggle",
+                name="iClone Buttons Toggle",
                 default=True,
         )
         option_show_iclone_toggle_state : bpy.props.BoolProperty(
@@ -81,9 +80,9 @@ class ds_ic_addon_prefs(bpy.types.AddonPreferences):
                 default=True,
         )     
         option_display_type : bpy.props.EnumProperty(
-                items=[('Default', "Default", "Default"),('Menu', "Menu", "Menu"),('Buttons', "Buttons", "Buttons"),],
+                items=[('Buttons', "Buttons", "Use Buttons"),('Menu', "Menu", "Append a Menu to Main Menu"),('Hide', "Import/Export", "Use only Import/Export Menu's"),],
                 name="Display Type",
-                default='Default',
+                default='Buttons',
         )
         def draw(self, context):
 
@@ -99,6 +98,8 @@ class ds_ic_addon_prefs(bpy.types.AddonPreferences):
                 box.prop(self, 'option_export_folder')
                 box.prop(self, 'option_textures_folder')
                 box.label(text='Automatically created as a sub folder relative to the saved .blend file. * Do NOT include any "\\".',icon='INFO')
+                box=layout.box()
+                box.prop(self, 'option_show_iclone_toggle')
                 box.prop(self, 'option_save_before_export')
 
 class ds_ic_menu(bpy.types.Menu):
@@ -134,19 +135,6 @@ def ds_ic_menu_func_export_cc(self, context):
 def ds_ic_menu_func_export_3dx(self, context):
     self.layout.operator("ds_ic.export_3dx")
 
-def ds_ic_toolbar_btn_base(self, context):
-    self.layout.operator('ds_ic.import_base',text="Base",icon="IMPORT")
-def ds_ic_toolbar_btn_female(self, context):
-    self.layout.operator('ds_ic.import_female',text="Female",icon="IMPORT")
-def ds_ic_toolbar_btn_male(self, context):
-    self.layout.operator('ds_ic.import_male',text="Male",icon="IMPORT")
-def ds_ic_toolbar_btn_cc(self, context):
-    self.layout.operator('ds_ic.export_cc',text="CC",icon="LINK_BLEND")
-def ds_ic_toolbar_btn_3dx(self, context):
-    self.layout.operator('ds_ic.export_3dx',text="3DX",icon="EXPORT")
-def ds_ic_toolbar_btn_ic(self, context):
-    self.layout.operator('ds_ic.export_ic',text="IC",icon="LINK_BLEND")
-
 def ds_ic_draw_btns(self, context):
     
     if context.region.alignment != 'RIGHT':
@@ -154,15 +142,45 @@ def ds_ic_draw_btns(self, context):
         layout = self.layout
         row = layout.row(align=True)
         
-        row.operator("ds_ic.toolbar_btn_base")
-        row.operator("ds_ic.toolbar_btn_female")
-        row.operator("ds_ic.toolbar_btn_male")
-        row.operator("ds_ic.toolbar_btn_cc")
-        row.operator("ds_ic.toolbar_btn_3dx")
+        if bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle:
+
+                if bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
+                        row.operator(ds_ic_toggle.bl_idname,text="iClone",icon="TRIA_LEFT")
+                else:
+                        row.operator(ds_ic_toggle.bl_idname,text="iClone",icon="TRIA_RIGHT")
+
+        if bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state or not bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle:
+
+                row.operator("ds_ic.import_base",text="Base",icon="IMPORT")
+                row.operator("ds_ic.import_female",text="Female",icon="IMPORT")
+                row.operator("ds_ic.import_male",text="Male",icon="IMPORT")
+                row.operator("ds_ic.export_cc",text="CC",icon="LINK_BLEND")
+                row.operator("ds_ic.export_3dx",text="3DX",icon="EXPORT")
+
+class ds_ic_toggle(bpy.types.Operator):
+
+    bl_idname = "ds_ic.toggle"
+    bl_label = "iClone"
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    def execute(self, context):
+
+        if not bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
+            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=True
+        else:
+            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
+        return {'FINISHED'}
+
+classes = (
+    ds_ic_addon_prefs,
+    ds_ic_toggle,
+)
 
 def register():
 
-        register_class(ds_ic_addon_prefs)
+        from bpy.utils import register_class
+        for cls in classes:
+                register_class(cls)
 
         ds_ic.register()
 
@@ -171,6 +189,8 @@ def register():
         bpy.types.TOPBAR_MT_file_import.append(ds_ic_menu_func_import_male)
         bpy.types.TOPBAR_MT_file_export.append(ds_ic_menu_func_export_cc)
         bpy.types.TOPBAR_MT_file_export.append(ds_ic_menu_func_export_3dx)
+
+        bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
 
         if bpy.context.preferences.addons[__package__].preferences.option_display_type=='Buttons':
 
@@ -200,7 +220,9 @@ def unregister():
 
         ds_ic.unregister()
 
-        unregister_class(ds_ic_addon_prefs)
+        from bpy.utils import unregister_class
+        for cls in reversed(classes):
+                unregister_class(cls)
 
 if __name__ == "__main__":
 

@@ -138,20 +138,6 @@ class ds_ic_export_cc(bpy.types.Operator):
 
         return {'FINISHED'}
 
-class ds_ic_toggle(bpy.types.Operator):
-
-    bl_idname = "ds_ic.toggle"
-    bl_label = "iClone"
-    bl_space_type = 'PROPERTIES'
-    bl_region_type = 'WINDOW'
-    def execute(self, context):
-
-        if not bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
-            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=True
-        else:
-            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
-        return {'FINISHED'}
-
 classes = (
     ds_ic_fbx_export_execute,
     ds_ic_import_base,
@@ -159,7 +145,6 @@ classes = (
     ds_ic_import_male,
     ds_ic_export_cc,
     ds_ic_export_3dx,
-    ds_ic_toggle,
 )
 
 def register():
