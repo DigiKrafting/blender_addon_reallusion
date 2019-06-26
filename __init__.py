@@ -17,35 +17,30 @@
 # ##### END GPL LICENSE BLOCK #####
 
 bl_info = {
-        "name": "iClone",
-        "description": "iClone Tools",
-        "author": "Digiography.Studio",
-        "version": (1, 2, 5),
+        "name": "DKS Reallusion",
+        "description": "Reallusion Pipeline",
+        "author": "DigiKrafting.Studio",
+        "version": (1, 3, 0),
         "blender": (2, 80, 0),
         "location": "Info Toolbar, File -> Import, File -> Export",
-        "wiki_url":    "https://github.com/Digiography/blender_addon_iclone/wiki",
-        "tracker_url": "https://github.com/Digiography/blender_addon_iclone/issues",
+        "wiki_url":    "https://github.com/DigiKrafting/blender_addon_reallusion/wiki",
+        "tracker_url": "https://github.com/DigiKrafting/blender_addon_reallusion/issues",
         "category": "Import-Export",
 }
 
 import bpy
-from . import ds_ic
+from . import dks_rl
 
-class ds_ic_addon_prefs(bpy.types.AddonPreferences):
+class dks_rl_addon_prefs(bpy.types.AddonPreferences):
 
         bl_idname = __package__
 
-        option_ic_exe : bpy.props.StringProperty(
-                name="iClone Executable",
-                subtype='FILE_PATH',
-                default="C:\Program Files\Reallusion\iClone 7\Bin64\iClone.exe",
-        )    
-        option_ic_cc_exe : bpy.props.StringProperty(
+        option_rl_cc_exe : bpy.props.StringProperty(
                 name="Character Creator Executable",
                 subtype='FILE_PATH',
                 default="C:\Program Files\Reallusion\Character Creator 3\Bin64\CharacterCreator.exe",
         )    
-        option_ic_3dx_exe : bpy.props.StringProperty(
+        option_rl_3dx_exe : bpy.props.StringProperty(
                 name="3DXchange Executable",
                 subtype='FILE_PATH',
                 default="C:\Program Files (x86)\Reallusion\iClone 3DXchange 7\Bin\iClone3DXchange.exe",
@@ -58,21 +53,21 @@ class ds_ic_addon_prefs(bpy.types.AddonPreferences):
                 name="Textures Folder Name",
                 default="Textures",
         )     
-        option_ic_templates_path : bpy.props.StringProperty(
-                name="iClone Templates Path",
+        option_rl_templates_path : bpy.props.StringProperty(
+                name="CC Templates Path",
                 subtype='DIR_PATH',
                 default="",
         )     
-        option_show_zbc : bpy.props.BoolProperty(
-                name="Show ZBrushCore Buttons",
+        option_sp_rename : bpy.props.BoolProperty(
+                name="Copy and Rename SP Textures",
+                default=False,
+        )
+        option_show_rl_toggle : bpy.props.BoolProperty(
+                name="Buttons Toggle",
                 default=True,
         )
-        option_show_iclone_toggle : bpy.props.BoolProperty(
-                name="iClone Buttons Toggle",
-                default=True,
-        )
-        option_show_iclone_toggle_state : bpy.props.BoolProperty(
-                name="iClone Toggle Button State",
+        option_show_rl_toggle_state : bpy.props.BoolProperty(
+                name="Toggle Button State",
                 default=False,
         )                          
         option_save_before_export : bpy.props.BoolProperty(
@@ -90,90 +85,91 @@ class ds_ic_addon_prefs(bpy.types.AddonPreferences):
 
                 box=layout.box()
                 box.prop(self, 'option_display_type')
-                box.prop(self, 'option_ic_exe')
-                box.prop(self, 'option_ic_3dx_exe')
-                box.prop(self, 'option_ic_cc_exe')
-                box.prop(self, 'option_ic_templates_path')
+                box.prop(self, 'option_rl_3dx_exe')
+                box.prop(self, 'option_rl_cc_exe')
+                box.prop(self, 'option_rl_templates_path')
                 box=layout.box()
                 box.prop(self, 'option_export_folder')
                 box.prop(self, 'option_textures_folder')
                 box.label(text='Automatically created as a sub folder relative to the saved .blend file. * Do NOT include any "\\".',icon='INFO')
+                box.prop(self, 'option_sp_rename')
+                box.label(text='Create "//{Textures}/Reallusion/" folder and rename texture files to Reallusion''s naming Conventions".',icon='INFO')
                 box=layout.box()
-                box.prop(self, 'option_show_iclone_toggle')
+                box.prop(self, 'option_show_rl_toggle')
                 box.prop(self, 'option_save_before_export')
 
-class ds_ic_menu(bpy.types.Menu):
+class dks_rl_menu(bpy.types.Menu):
 
     bl_label = " " + bl_info['name']
-    bl_idname = "ds_ic.menu"
+    bl_idname = "dks_rl.menu"
 
     def draw(self, context):
             
         layout = self.layout
 
-        layout.operator('ds_ic.import_base',icon="IMPORT")
-        layout.operator('ds_ic.import_female',icon="IMPORT")
-        layout.operator('ds_ic.import_male',icon="IMPORT")
+        layout.operator('dks_rl.import_base',icon="IMPORT")
+        layout.operator('dks_rl.import_female',icon="IMPORT")
+        layout.operator('dks_rl.import_male',icon="IMPORT")
         layout.separator()
-        layout.operator('ds_ic.export_cc',icon="LINK_BLEND")
-        layout.operator('ds_ic.export_3dx',icon="EXPORT")
-        layout.operator('ds_ic.export_ic',icon="LINK_BLEND")
+        layout.operator('dks_rl.export_cc',icon="LINK_BLEND")
+        layout.operator('dks_rl.export_3dx',icon="EXPORT")
+        #layout.operator('dks_rl.export_ic',icon="LINK_BLEND")
 
-def draw_ds_ic_menu(self, context):
+def draw_dks_rl_menu(self, context):
 
         layout = self.layout
-        layout.menu(ds_ic_menu.bl_idname,icon="COLLAPSEMENU")
+        layout.menu(dks_rl_menu.bl_idname,icon="COLLAPSEMENU")
 
-def ds_ic_menu_func_import_base(self, context):
-    self.layout.operator("ds_ic.import_base")
-def ds_ic_menu_func_import_female(self, context):
-    self.layout.operator("ds_ic.import_female")
-def ds_ic_menu_func_import_male(self, context):
-    self.layout.operator("ds_ic.import_male")
-def ds_ic_menu_func_export_cc(self, context):
-    self.layout.operator("ds_ic.export_cc")
-def ds_ic_menu_func_export_3dx(self, context):
-    self.layout.operator("ds_ic.export_3dx")
+def dks_rl_menu_func_import_base(self, context):
+    self.layout.operator("dks_rl.import_base")
+def dks_rl_menu_func_import_female(self, context):
+    self.layout.operator("dks_rl.import_female")
+def dks_rl_menu_func_import_male(self, context):
+    self.layout.operator("dks_rl.import_male")
+def dks_rl_menu_func_export_cc(self, context):
+    self.layout.operator("dks_rl.export_cc")
+def dks_rl_menu_func_export_3dx(self, context):
+    self.layout.operator("dks_rl.export_3dx")
 
-def ds_ic_draw_btns(self, context):
+def dks_rl_draw_btns(self, context):
     
     if context.region.alignment != 'RIGHT':
 
         layout = self.layout
         row = layout.row(align=True)
         
-        if bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle:
+        if bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle:
 
-                if bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
-                        row.operator(ds_ic_toggle.bl_idname,text="iClone",icon="TRIA_LEFT")
+                if bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state:
+                        row.operator(dks_rl_toggle.bl_idname,text="IC",icon="TRIA_LEFT")
                 else:
-                        row.operator(ds_ic_toggle.bl_idname,text="iClone",icon="TRIA_RIGHT")
+                        row.operator(dks_rl_toggle.bl_idname,text="IC",icon="TRIA_RIGHT")
 
-        if bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state or not bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle:
+        if bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state or not bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle:
 
-                row.operator("ds_ic.import_base",text="Base",icon="IMPORT")
-                row.operator("ds_ic.import_female",text="Female",icon="IMPORT")
-                row.operator("ds_ic.import_male",text="Male",icon="IMPORT")
-                row.operator("ds_ic.export_cc",text="CC",icon="LINK_BLEND")
-                row.operator("ds_ic.export_3dx",text="3DX",icon="EXPORT")
+                row.operator("dks_rl.export_cc",text="CC",icon="EXPORT")
+                row.operator("dks_rl.export_3dx",text="3DX",icon="EXPORT")
+                row.operator("dks_rl.import_base",text="Base",icon="IMPORT")
+                row.operator("dks_rl.import_female",text="Female",icon="IMPORT")
+                row.operator("dks_rl.import_male",text="Male",icon="IMPORT")
 
-class ds_ic_toggle(bpy.types.Operator):
+class dks_rl_toggle(bpy.types.Operator):
 
-    bl_idname = "ds_ic.toggle"
-    bl_label = "iClone"
+    bl_idname = "dks_rl.toggle"
+    bl_label = "RL"
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     def execute(self, context):
 
-        if not bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state:
-            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=True
+        if not bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state:
+            bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state=True
         else:
-            bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
+            bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state=False
         return {'FINISHED'}
 
 classes = (
-    ds_ic_addon_prefs,
-    ds_ic_toggle,
+    dks_rl_addon_prefs,
+    dks_rl_toggle,
 )
 
 def register():
@@ -182,43 +178,43 @@ def register():
         for cls in classes:
                 register_class(cls)
 
-        ds_ic.register()
+        dks_rl.register()
 
-        bpy.types.TOPBAR_MT_file_import.append(ds_ic_menu_func_import_base)
-        bpy.types.TOPBAR_MT_file_import.append(ds_ic_menu_func_import_female)
-        bpy.types.TOPBAR_MT_file_import.append(ds_ic_menu_func_import_male)
-        bpy.types.TOPBAR_MT_file_export.append(ds_ic_menu_func_export_cc)
-        bpy.types.TOPBAR_MT_file_export.append(ds_ic_menu_func_export_3dx)
+        bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_base)
+        bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_female)
+        bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_male)
+        bpy.types.TOPBAR_MT_file_export.append(dks_rl_menu_func_export_cc)
+        bpy.types.TOPBAR_MT_file_export.append(dks_rl_menu_func_export_3dx)
 
-        bpy.context.preferences.addons[__package__].preferences.option_show_iclone_toggle_state=False
+        bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state=False
 
         if bpy.context.preferences.addons[__package__].preferences.option_display_type=='Buttons':
 
-                bpy.types.TOPBAR_HT_upper_bar.append(ds_ic_draw_btns)
+                bpy.types.TOPBAR_HT_upper_bar.append(dks_rl_draw_btns)
 
         elif bpy.context.preferences.addons[__package__].preferences.option_display_type=='Menu':
 
-                register_class(ds_ic_menu)
-                bpy.types.INFO_HT_header.append(draw_ds_ic_menu)
+                register_class(dks_rl_menu)
+                bpy.types.INFO_HT_header.append(draw_dks_rl_menu)
 
 def unregister():
 
-        bpy.types.TOPBAR_MT_file_import.remove(ds_ic_menu_func_import_base)
-        bpy.types.TOPBAR_MT_file_import.remove(ds_ic_menu_func_import_female)
-        bpy.types.TOPBAR_MT_file_import.remove(ds_ic_menu_func_import_male)
-        bpy.types.TOPBAR_MT_file_export.remove(ds_ic_menu_func_export_cc)
-        bpy.types.TOPBAR_MT_file_export.remove(ds_ic_menu_func_export_3dx)
+        bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_base)
+        bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_female)
+        bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_male)
+        bpy.types.TOPBAR_MT_file_export.remove(dks_rl_menu_func_export_cc)
+        bpy.types.TOPBAR_MT_file_export.remove(dks_rl_menu_func_export_3dx)
 
         if bpy.context.preferences.addons[__package__].preferences.option_display_type=='Buttons':
 
-                bpy.types.TOPBAR_HT_upper_bar.remove(ds_ic_draw_btns)
+                bpy.types.TOPBAR_HT_upper_bar.remove(dks_rl_draw_btns)
 
         elif bpy.context.preferences.addons[__package__].preferences.option_display_type=='Menu':
 
-                unregister_class(ds_ic_menu)
-                bpy.types.INFO_HT_header.remove(draw_ds_ic_menu)
+                unregister_class(dks_rl_menu)
+                bpy.types.INFO_HT_header.remove(draw_dks_rl_menu)
 
-        ds_ic.unregister()
+        dks_rl.unregister()
 
         from bpy.utils import unregister_class
         for cls in reversed(classes):

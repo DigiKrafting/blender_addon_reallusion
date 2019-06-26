@@ -1,32 +1,33 @@
-# Blender Addon iClone
+# Blender Addon Reallusion
 
-Pipeline/Workflow import/export for iClone.
+Pipeline/Workflow import/export for Character Creator (CC) and export to 3DXchange for iClone.
 
 \* Updated to Blender 2.80.0 Beta
 
 # Features
 
-- One click iClone Base FBX Template Import (Copies "Base.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
-- One click iClone Female FBX Template Import (Copies "Base Female.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
-- One click iClone Male FBX Template Import (Copies "Base Male.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
+- One click CC Base FBX Template Import (Copies "Base.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
+- One click CC Female FBX Template Import (Copies "Base Female.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
+- One click CC Male FBX Template Import (Copies "Base Male.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
+- Option to create "//{Textures}/Reallusion/" folder and copy/rename texture files to Reallusion''s naming Conventions for import (* See CC screenshot below)
 
 ## 3DXchange
 
-- One click iClone 3DXchange FBX Export (Exports scene to export folder and opens file in 3DXchange)
+- One click 3DXchange FBX Export (Exports scene to export folder and opens file in 3DXchange)
 
 ## Character Creator
 
-- Application Link to Open iClone Character Creator (Exports scene to export folder before opening Character Creator for manual import)
+- Application Link to Open CC (Exports scene to export folder before opening CC for manual import)
 
 # Required Blender Version
 
 Blender 2.80.0+
 
-blender_addon_iclone 1.2.0+
+blender_addon_reallusion 1.2.0+
 
 2.80.0
 
-Prior to blender_addon_iclone 1.2.0
+Prior to blender_addon_reallusion 1.2.0
 
 2.79.0
 
@@ -44,7 +45,7 @@ CC3 Templates [https://www.reallusion.com/character-creator/custom-outfit.html]
 
 \* In preferences set the "iClone Templates Path" to the base folder of CC3_Body_Templates, e.g. C:\CC3_Body_Templates\
 
-Download either the tar.gz or zip from [https://github.com/Digiography/blender_addon_iclone/releases/latest](https://github.com/Digiography/blender_addon_iclone/releases/latest)
+Download either the tar.gz or zip from [https://github.com/DigiKrafting/reallusion/releases/latest](https://github.com/DigiKrafting/reallusion/releases/latest)
 
 Installing an Addon in Blender
 
@@ -57,3 +58,5 @@ Installing an Addon in Blender
 ![alt](/screenshots/ic_prefs.png)
 
 ![alt](/screenshots/ic.png)
+
+![alt](/screenshots/rl_textures.png)
