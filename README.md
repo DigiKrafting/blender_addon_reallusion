@@ -45,7 +45,9 @@ CC3 Templates [https://www.reallusion.com/character-creator/custom-outfit.html]
 
 \* In preferences set the "iClone Templates Path" to the base folder of CC3_Body_Templates, e.g. C:\CC3_Body_Templates\
 
-Download either the tar.gz or zip from [https://github.com/DigiKrafting/reallusion/releases/latest](https://github.com/DigiKrafting/reallusion/releases/latest)
+Download either the tar.gz or zip from [https://github.com/DigiKrafting/blender_addon_reallusion
+/releases/latest](https://github.com/DigiKrafting/blender_addon_reallusion
+/releases/latest)
 
 Installing an Addon in Blender
 
