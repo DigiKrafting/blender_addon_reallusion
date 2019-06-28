@@ -75,11 +75,19 @@ Installing an Addon in Blender
 
 # Screenshots
 
+## CC Template Eyelash Opacity
+
 ![alt](/screenshots/rl_eyelash.png)
+
+## CC Textures Import
 
 ![alt](/screenshots/rl_textures.png)
 
+## Preferences
+
 ![alt](/screenshots/ic_prefs.png)
+
+## Blender 2.79 
 
 ![alt](/screenshots/ic.png)
 
