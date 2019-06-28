@@ -10,6 +10,7 @@ Pipeline/Workflow import/export for Character Creator (CC) and export to 3DXchan
 - One click CC Female FBX Template Import (Copies "Base Female.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
 - One click CC Male FBX Template Import (Copies "Base Male.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
 - Option to create "//{Textures}/Reallusion/" folder and copy/rename texture files to Reallusion''s naming Conventions for import (* See CC screenshot below)
+- Sets eyelash material to Blend Mode 'MULTIPLY' (* See screenshot below)
 
 ## 3DXchange
 
@@ -55,8 +56,12 @@ Installing an Addon in Blender
 
 # Screenshots
 
+![alt](/screenshots/rl_eyelash.png)
+
+![alt](/screenshots/rl_textures.png)
+
 ![alt](/screenshots/ic_prefs.png)
 
 ![alt](/screenshots/ic.png)
 
-![alt](/screenshots/rl_textures.png)
+

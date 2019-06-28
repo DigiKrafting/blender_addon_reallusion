@@ -96,9 +96,27 @@ def dks_rl_sp_textures_rename():
                     _filename = filename.replace(_match,texture_names[_match])
                     _filepath_copy=path.join(_reallusion_path,_filename)
 
-                    system('copy "' + _filepath + '" "' + _filepath_copy + '"')
+                    system('copy /Y "' + _filepath + '" "' + _filepath_copy + '"')
 
-#texture_names
+def dks_rl_material_adjustments():
+
+    _objects = bpy.context.scene.objects
+
+    for _obj in _objects:
+
+        if _obj.type=='MESH':
+
+            _obj_name = _obj.name
+
+            if "CC_Base_Body" in _obj_name:
+
+                _materials = _obj.data.materials
+
+                for _material in _materials:
+
+                    if "Std_Eyelash" in _material.name:
+
+                        _material.blend_method = 'MULTIPLY'
 
 class dks_rl_import_base(bpy.types.Operator):
 
@@ -110,9 +128,11 @@ class dks_rl_import_base(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = dks_rl_get_export_path()
 
-        system('copy "' + bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy /Y "' + bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
 
         bpy.ops.import_scene.fbx(filepath = bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Neutral_Maya_fbx\CC3_Neutral_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
+
+        dks_rl_material_adjustments()
 
         return {'FINISHED'}
 
@@ -126,9 +146,11 @@ class dks_rl_import_female(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = dks_rl_get_export_path()
 
-        system('copy "' + bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy /Y "' + bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
         
         bpy.ops.import_scene.fbx(filepath = bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Base Female_Maya_fbx\CC3_Base Female_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
+
+        dks_rl_material_adjustments()
 
         return {'FINISHED'}
 
@@ -142,9 +164,11 @@ class dks_rl_import_male(bpy.types.Operator):
         _export_name = bpy.path.basename(bpy.context.blend_data.filepath).replace('.blend','')
         _export_path = dks_rl_get_export_path()
 
-        system('copy "' + bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
+        system('copy /Y "' + bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.fbxkey" + '" "' + _export_path + _export_name + '.fbxkey"')
 
         bpy.ops.import_scene.fbx(filepath = bpy.context.preferences.addons[__package__].preferences.option_rl_templates_path + "Maya\FBX\CC3_Base Male_Maya_fbx\CC3_Base Male_Maya_fbx.Fbx", axis_forward='-Z', axis_up='Y')
+
+        dks_rl_material_adjustments()
 
         return {'FINISHED'}
 
