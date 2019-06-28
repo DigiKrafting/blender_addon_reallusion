@@ -9,7 +9,6 @@ Pipeline/Workflow import/export for Character Creator (CC) and export to 3DXchan
 - One click CC Base FBX Template Import (Copies "Base.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
 - One click CC Female FBX Template Import (Copies "Base Female.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
 - One click CC Male FBX Template Import (Copies "Base Male.fbxkey" to export folder and renames it to the Blender "filename.fbxkey")
-- Option to create "//{Textures}/Reallusion/" folder and copy/rename texture files to Reallusion''s naming Conventions for import (* See CC screenshot below)
 - Sets eyelash material to Blend Mode 'MULTIPLY' (* See screenshot below)
 
 ## 3DXchange
@@ -19,6 +18,8 @@ Pipeline/Workflow import/export for Character Creator (CC) and export to 3DXchan
 ## Character Creator
 
 - Application Link to Open CC (Exports scene to export folder before opening CC for manual import)
+- Export option to create "//{Textures}/Reallusion/" folder and copy/rename texture files to Reallusion''s naming Conventions for import (* See CC screenshot below)
+- Import CC character (fbx) and setup PBR materials using the Principled BSDF shader.
 
 # Required Blender Version
 
@@ -53,6 +54,24 @@ Installing an Addon in Blender
 - [File]->[User Preferences]
 - Select [Add-ons] Tab
 - Click [Install Add-on from File..]
+
+# Character Creator
+
+## Outfits_Male Avatar (* No changes/conforming)
+
+![alt](/screenshots/cc_male.png)
+
+## Export Configuration
+
+![alt](/screenshots/cc_export.png)
+
+## Default Blender FBX Import (* Default Scene Setup/Lighting)
+
+![alt](/screenshots/cc_import_default.png)
+
+## FBX Import via this Addon (* Default Scene Setup/Lighting)
+
+![alt](/screenshots/cc_import_pbr.png)
 
 # Screenshots
 

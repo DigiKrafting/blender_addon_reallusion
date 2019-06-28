@@ -20,7 +20,7 @@ bl_info = {
         "name": "DKS Reallusion",
         "description": "Reallusion Pipeline",
         "author": "DigiKrafting.Studio",
-        "version": (1, 3, 1),
+        "version": (1, 3, 5),
         "blender": (2, 80, 0),
         "location": "Info Toolbar, File -> Import, File -> Export",
         "wiki_url":    "https://github.com/DigiKrafting/blender_addon_reallusion/wiki",
@@ -106,12 +106,14 @@ class dks_rl_menu(bpy.types.Menu):
     def draw(self, context):
             
         layout = self.layout
-
+        
+        layout.operator('dks_rl.export_cc',icon="EXPORT")
+        layout.operator('dks_rl.import_cc',icon="IMPORT")
+        layout.separator()
         layout.operator('dks_rl.import_base',icon="IMPORT")
         layout.operator('dks_rl.import_female',icon="IMPORT")
         layout.operator('dks_rl.import_male',icon="IMPORT")
         layout.separator()
-        layout.operator('dks_rl.export_cc',icon="LINK_BLEND")
         layout.operator('dks_rl.export_3dx',icon="EXPORT")
         #layout.operator('dks_rl.export_ic',icon="LINK_BLEND")
 
@@ -128,6 +130,8 @@ def dks_rl_menu_func_import_male(self, context):
     self.layout.operator("dks_rl.import_male")
 def dks_rl_menu_func_export_cc(self, context):
     self.layout.operator("dks_rl.export_cc")
+def dks_rl_menu_func_import_cc(self, context):
+    self.layout.operator("dks_rl.import_cc")
 def dks_rl_menu_func_export_3dx(self, context):
     self.layout.operator("dks_rl.export_3dx")
 
@@ -148,6 +152,7 @@ def dks_rl_draw_btns(self, context):
         if bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state or not bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle:
 
                 row.operator("dks_rl.export_cc",text="CC",icon="EXPORT")
+                row.operator("dks_rl.import_cc",text="CC",icon="IMPORT")
                 row.operator("dks_rl.export_3dx",text="3DX",icon="EXPORT")
                 row.operator("dks_rl.import_base",text="Base",icon="IMPORT")
                 row.operator("dks_rl.import_female",text="Female",icon="IMPORT")
@@ -180,9 +185,11 @@ def register():
 
         dks_rl.register()
 
+        bpy.types.TOPBAR_MT_file_export.append(dks_rl_menu_func_import_cc)
         bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_base)
         bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_female)
         bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_male)
+        
         bpy.types.TOPBAR_MT_file_export.append(dks_rl_menu_func_export_cc)
         bpy.types.TOPBAR_MT_file_export.append(dks_rl_menu_func_export_3dx)
 
@@ -199,6 +206,7 @@ def register():
 
 def unregister():
 
+        bpy.types.TOPBAR_MT_file_export.remove(dks_rl_menu_func_import_cc)
         bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_base)
         bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_female)
         bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_male)
