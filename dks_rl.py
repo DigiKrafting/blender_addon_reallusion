@@ -344,10 +344,12 @@ def dks_rl_pbr_nodes(fbx_file):
                         node.image.colorspace_settings.name = 'Non-Color'
 
 class dks_rl_import_cc(bpy.types.Operator):
+
     bl_idname = "dks_rl.import_cc"
-    bl_label = "Import CC"
+    bl_label = "Import CC (.fbx)"
+    bl_description = "Import CC character and setup PBR"
+
     filepath : bpy.props.StringProperty(subtype="FILE_PATH")
-    #option_relative : bpy.props.BoolProperty(name="Relative")
     filter_glob : StringProperty(default="*.fbx")
     
     def execute(self, context):
@@ -363,10 +365,11 @@ class dks_rl_import_cc(bpy.types.Operator):
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
-class dks_rl_import_base(bpy.types.Operator):
+class dks_rl_import_neutral(bpy.types.Operator):
 
-    bl_idname = "dks_rl.import_base"
-    bl_label = "CC Base Template (FBX)"
+    bl_idname = "dks_rl.import_neutral"
+    bl_label = "CC Neutral Template (.fbx)"
+    bl_description = "Import CC Neutral Template"
 
     def execute(self, context):
 
@@ -384,7 +387,8 @@ class dks_rl_import_base(bpy.types.Operator):
 class dks_rl_import_female(bpy.types.Operator):
 
     bl_idname = "dks_rl.import_female"
-    bl_label = "CC Female Template (FBX)"
+    bl_label = "CC Female Template (.fbx)"
+    bl_description = "Import CC Female Template"
 
     def execute(self, context):
 
@@ -402,7 +406,8 @@ class dks_rl_import_female(bpy.types.Operator):
 class dks_rl_import_male(bpy.types.Operator):
 
     bl_idname = "dks_rl.import_male"
-    bl_label = "CC Male Template (FBX)"
+    bl_label = "CC Male Template (.fbx)"
+    bl_description = "Import CC Male Template"
 
     def execute(self, context):
 
@@ -420,7 +425,8 @@ class dks_rl_import_male(bpy.types.Operator):
 class dks_rl_export_3dx(bpy.types.Operator):
 
     bl_idname = "dks_rl.export_3dx"
-    bl_label = "3DXchange (FBX)"
+    bl_label = "3DXchange (.fbx)"
+    bl_description = "Export scene and open in 3DXchange"
 
     def execute(self, context):
 
@@ -437,7 +443,8 @@ class dks_rl_export_3dx(bpy.types.Operator):
 class dks_rl_export_cc(bpy.types.Operator):
 
     bl_idname = "dks_rl.export_cc"
-    bl_label = "Character Creator (FBX)"
+    bl_label = "Character Creator (.fbx)"
+    bl_description = "Export .fbx and open CC"
 
     def execute(self, context):
 
@@ -453,7 +460,7 @@ class dks_rl_export_cc(bpy.types.Operator):
 
 classes = (
     dks_rl_fbx_export_execute,
-    dks_rl_import_base,
+    dks_rl_import_neutral,
     dks_rl_import_female,
     dks_rl_import_male,
     dks_rl_export_cc,

@@ -20,7 +20,7 @@ bl_info = {
         "name": "DKS Reallusion",
         "description": "Reallusion Pipeline",
         "author": "DigiKrafting.Studio",
-        "version": (1, 3, 5),
+        "version": (1, 3, 6),
         "blender": (2, 80, 0),
         "location": "Info Toolbar, File -> Import, File -> Export",
         "wiki_url":    "https://github.com/DigiKrafting/blender_addon_reallusion/wiki",
@@ -110,7 +110,7 @@ class dks_rl_menu(bpy.types.Menu):
         layout.operator('dks_rl.export_cc',icon="EXPORT")
         layout.operator('dks_rl.import_cc',icon="IMPORT")
         layout.separator()
-        layout.operator('dks_rl.import_base',icon="IMPORT")
+        layout.operator('dks_rl.import_neutral',icon="IMPORT")
         layout.operator('dks_rl.import_female',icon="IMPORT")
         layout.operator('dks_rl.import_male',icon="IMPORT")
         layout.separator()
@@ -122,8 +122,8 @@ def draw_dks_rl_menu(self, context):
         layout = self.layout
         layout.menu(dks_rl_menu.bl_idname,icon="COLLAPSEMENU")
 
-def dks_rl_menu_func_import_base(self, context):
-    self.layout.operator("dks_rl.import_base")
+def dks_rl_menu_func_import_neutral(self, context):
+    self.layout.operator("dks_rl.import_neutral")
 def dks_rl_menu_func_import_female(self, context):
     self.layout.operator("dks_rl.import_female")
 def dks_rl_menu_func_import_male(self, context):
@@ -154,7 +154,7 @@ def dks_rl_draw_btns(self, context):
                 row.operator("dks_rl.export_cc",text="CC",icon="EXPORT")
                 row.operator("dks_rl.import_cc",text="CC",icon="IMPORT")
                 row.operator("dks_rl.export_3dx",text="3DX",icon="EXPORT")
-                row.operator("dks_rl.import_base",text="Base",icon="IMPORT")
+                row.operator("dks_rl.import_neutral",text="neutral",icon="IMPORT")
                 row.operator("dks_rl.import_female",text="Female",icon="IMPORT")
                 row.operator("dks_rl.import_male",text="Male",icon="IMPORT")
 
@@ -185,8 +185,8 @@ def register():
 
         dks_rl.register()
 
-        bpy.types.TOPBAR_MT_file_export.append(dks_rl_menu_func_import_cc)
-        bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_base)
+        bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_cc)
+        bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_neutral)
         bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_female)
         bpy.types.TOPBAR_MT_file_import.append(dks_rl_menu_func_import_male)
         
@@ -206,8 +206,8 @@ def register():
 
 def unregister():
 
-        bpy.types.TOPBAR_MT_file_export.remove(dks_rl_menu_func_import_cc)
-        bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_base)
+        bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_cc)
+        bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_neutral)
         bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_female)
         bpy.types.TOPBAR_MT_file_import.remove(dks_rl_menu_func_import_male)
         bpy.types.TOPBAR_MT_file_export.remove(dks_rl_menu_func_export_cc)
