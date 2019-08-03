@@ -91,4 +91,17 @@ Installing an Addon in Blender
 
 ![alt](/screenshots/ic.png)
 
+# 3DXchange
+
+## Blender to 3DXchange
+
+![alt](/screenshots/3dx_cc_blender.png)
+
+## 3DXchange to iClone
+
+![alt](/screenshots/3dx_cc_3dx.png)
+
+## iClone
+
+![alt](/screenshots/3dx_cc_iclone.png)
 

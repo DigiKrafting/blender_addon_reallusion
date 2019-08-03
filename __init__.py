@@ -20,7 +20,7 @@ bl_info = {
         "name": "DKS Reallusion",
         "description": "Reallusion Pipeline",
         "author": "DigiKrafting.Studio",
-        "version": (1, 3, 6),
+        "version": (1, 3, 7),
         "blender": (2, 80, 0),
         "location": "Info Toolbar, File -> Import, File -> Export",
         "wiki_url":    "https://github.com/DigiKrafting/blender_addon_reallusion/wiki",
@@ -145,9 +145,9 @@ def dks_rl_draw_btns(self, context):
         if bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle:
 
                 if bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state:
-                        row.operator(dks_rl_toggle.bl_idname,text="IC",icon="TRIA_LEFT")
+                        row.operator(dks_rl_toggle.bl_idname,text="RL",icon="TRIA_LEFT")
                 else:
-                        row.operator(dks_rl_toggle.bl_idname,text="IC",icon="TRIA_RIGHT")
+                        row.operator(dks_rl_toggle.bl_idname,text="RL",icon="TRIA_RIGHT")
 
         if bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle_state or not bpy.context.preferences.addons[__package__].preferences.option_show_rl_toggle:
 
