@@ -141,24 +141,31 @@ def dks_rl_pbr_nodes(fbx_file):
 
             _obj_name = _obj.name.split(".")[0]
 
+            print("")
+            print("# Object Name: ["+_obj_name+"]")
+
             _materials = _obj.data.materials
 
             for _material in _materials:
 
                 _material_name = _material.name.split(".")[0]
+                
+                print("")
+                print("## Material: ["+_material_name+"]")
 
                 _textures_path = _fbx_folder + "\\" + _fbx_file + ".fbm\\"
                 
                 print(_textures_path+_material_name+'_Diffuse.png')
 
                 _file_Diffuse = dks_rl_get_texture_file(_textures_path+_material_name+'_Diffuse.png')
-
                 if not _file_Diffuse:
                     _file_Diffuse = dks_rl_get_texture_file(_textures_path+_material_name+'_Diffuse.jpg')
 
                 _file_Normal = dks_rl_get_texture_file(_textures_path+_material_name+'_Normal.png')
-                _file_Opacity = dks_rl_get_texture_file(_textures_path+_material_name+'_Opacity.png')
+                if not _file_Normal:                
+                    _file_Normal = dks_rl_get_texture_file(_textures_path+_material_name+'_Normal.jpg')
 
+                _file_Opacity = dks_rl_get_texture_file(_textures_path+_material_name+'_Opacity.png')
                 if not _file_Opacity:
                     _file_Opacity = dks_rl_get_texture_file(_textures_path+_material_name+'_Opacity.jpg')
                 
@@ -181,8 +188,16 @@ def dks_rl_pbr_nodes(fbx_file):
                 print(_textures_path+_material_name+"\\"+_material_name+'_metallic.png')
 
                 _file_AO = dks_rl_get_texture_file(_textures_path+_material_name+"\\"+_material_name+'_ao.png')
+                if not _file_AO:
+                    _file_AO = dks_rl_get_texture_file(_textures_path+_material_name+"\\"+_material_name+'_ao.jpg')
+
                 _file_Metallic = dks_rl_get_texture_file(_textures_path+_material_name+"\\"+_material_name+'_metallic.png')
+                if not _file_Metallic:
+                    _file_Metallic = dks_rl_get_texture_file(_textures_path+_material_name+"\\"+_material_name+'_metallic.jpg')
+
                 _file_Roughness = dks_rl_get_texture_file(_textures_path+_material_name+"\\"+_material_name+'_roughness.png')
+                if not _file_Roughness:
+                    _file_Roughness = dks_rl_get_texture_file(_textures_path+_material_name+"\\"+_material_name+'_roughness.jpg')
 
                 _file_Emissive = "" #dks_rl_get_texture_file(_textures_path,_obj_name,_material_name,'Emissive',_texture_ext)
 
