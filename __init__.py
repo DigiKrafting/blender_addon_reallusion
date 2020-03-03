@@ -20,7 +20,7 @@ bl_info = {
         "name": "DKS Reallusion",
         "description": "Reallusion Pipeline",
         "author": "DigiKrafting.Studio",
-        "version": (1, 4, 0),
+        "version": (1, 4, 1),
         "blender": (2, 80, 0),
         "location": "Info Toolbar, File -> Import, File -> Export",
         "wiki_url":    "https://github.com/DigiKrafting/blender_addon_reallusion/wiki",

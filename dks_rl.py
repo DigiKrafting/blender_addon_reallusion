@@ -175,7 +175,7 @@ def dks_rl_pbr_nodes(fbx_file):
 
                     if "Std_Eyelash" in _material_name:
 
-                        _material.blend_method = 'MULTIPLY'
+                        _material.blend_method = 'BLEND'
 
                 else:
 
